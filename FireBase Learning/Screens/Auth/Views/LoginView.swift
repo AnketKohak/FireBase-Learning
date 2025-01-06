@@ -21,6 +21,7 @@ struct LoginView: View {
                     Spacer().frame(height: 12)
                     //textfields
                     InputView(placeholder: "Enter email address", isSecureField: false, text: $email)
+                     
                     InputView(placeholder: "Enter the password", isSecureField: true, text: $password)
                     //forgot button
                     forgotButton
