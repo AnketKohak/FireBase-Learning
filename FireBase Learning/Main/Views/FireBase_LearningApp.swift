@@ -5,6 +5,7 @@
 //  Created by anket kohak on 15/11/24.
 //
 
+
 import SwiftUI
 import UIKit
 import FirebaseCore
@@ -17,10 +18,10 @@ class AppDelegate: NSObject,UIApplicationDelegate{
 @main
 struct FireBase_LearningApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @StateObject private  var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            ContentView().environmentObject(authViewModel)
         }
     }
 }
