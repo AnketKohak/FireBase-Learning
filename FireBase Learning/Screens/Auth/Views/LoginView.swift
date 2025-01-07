@@ -43,7 +43,7 @@ struct LoginView: View {
             }.ignoresSafeArea()
                 .padding(.horizontal)
                 .padding(.vertical,8)
-               
+                .alert("Something went wrong",isPresented: $authViewModel.isError){}
         }
     }
     // MARK: - Login and SignUp
@@ -75,9 +75,7 @@ struct LoginView: View {
     
 }
 
-#Preview {
-    LoginView()
-}
+
 // MARK: - Static Content
 extension LoginView {
     private var apple: some View {
@@ -137,4 +135,10 @@ extension LoginView {
         } .foregroundStyle(.gray)
     }
   
+}
+
+
+
+#Preview {
+    LoginView().environmentObject(AuthViewModel())
 }

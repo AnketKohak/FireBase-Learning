@@ -13,6 +13,9 @@ struct CreateAccountView: View {
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @EnvironmentObject   var authViewModel : AuthViewModel
+    @Environment(\.presentationMode) var presentationMode
+    
+    // MARK: - Body
     var body: some View {
         VStack(spacing: 16){
             Text("Please complete all information to create an account.")
@@ -52,10 +55,13 @@ struct CreateAccountView: View {
             }
             
             Spacer()
-            //Button
+            // MARK: - Button
             Button {
                 Task{
                     await authViewModel.createUser(email: email, fullName: fullName, password: password)
+                    if !authViewModel.isError{
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
             } label: {
                 Text("Create Account")
@@ -73,5 +79,5 @@ struct CreateAccountView: View {
 }
 
 #Preview {
-    CreateAccountView()
+    CreateAccountView().environmentObject(AuthViewModel())
 }
