@@ -11,7 +11,7 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @EnvironmentObject   var authViewModel : AuthViewModel
-
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             ScrollView{
@@ -43,9 +43,63 @@ struct LoginView: View {
             }.ignoresSafeArea()
                 .padding(.horizontal)
                 .padding(.vertical,8)
+               
+        }
+    }
+    // MARK: - Login and SignUp
+   private var loginButton: some View {
+        Button {
+            Task{
+                await authViewModel.login(email: email, password: password)
+            }
+        } label: {
+            Text("Login")
+        }.buttonStyle(CapsuleButtonStyle())
+
+    }
+    
+    
+    private var signUp: some View {
+        NavigationLink{
+            CreateAccountView().environmentObject(authViewModel)
+        }label:{
+            HStack{
+                Text("Don't have an account?")
+                    .foregroundStyle(.black)
+                Text("Sign Up")
+                    .foregroundStyle(.teal)
+            }.fontWeight(.medium)
         }
     }
     
+    
+}
+
+#Preview {
+    LoginView()
+}
+// MARK: - Static Content
+extension LoginView {
+    private var apple: some View {
+        Button {
+        } label: {
+            Label("Sign up with Apple", systemImage: "apple.logo")
+        }.buttonStyle(CapsuleButtonStyle(bgColor: .black))
+    }
+    private var google: some View {
+        Button {
+        } label: {
+            HStack{
+                Image("google")
+                    .resizable()
+                    .frame(width: 15,height: 15)
+                Text("Sign up with Google")
+            }
+        }.buttonStyle(CapsuleButtonStyle(
+            textColor: .black, bgColor: .clear,
+            hasBorder: true
+        ))
+    }
     private var image: some View {
         Image("login_image")
             .resizable()
@@ -69,6 +123,11 @@ struct LoginView: View {
             }
         }
     }
+    private var line:some View {
+        VStack{
+            Divider().frame(height:10)
+        }
+    }
     private var or: some View {
         HStack{
             line
@@ -77,57 +136,5 @@ struct LoginView: View {
             line
         } .foregroundStyle(.gray)
     }
-    private var loginButton: some View {
-        Button {
-            Task{
-                await authViewModel.login(email: email, password: password)
-            }
-        } label: {
-            Text("Login")
-        }.buttonStyle(CapsuleButtonStyle())
-
-    }
-    
-    private var apple: some View {
-        Button {
-        } label: {
-            Label("Sign up with Apple", systemImage: "apple.logo")
-        }.buttonStyle(CapsuleButtonStyle(bgColor: .black))
-    }
-    private var google: some View {
-        Button {
-        } label: {
-            HStack{
-                Image("google")
-                    .resizable()
-                    .frame(width: 15,height: 15)
-                Text("Sign up with Google")
-            }
-        }.buttonStyle(CapsuleButtonStyle(
-            textColor: .black, bgColor: .clear,
-            hasBorder: true
-        ))
-    }
-    private var signUp: some View {
-        NavigationLink{
-            CreateAccountView().environmentObject(authViewModel)
-        }label:{
-            HStack{
-                Text("Don't have an account?")
-                    .foregroundStyle(.black)
-                Text("Sign Up")
-                    .foregroundStyle(.teal)
-            }.fontWeight(.medium)
-        }
-    }
-    
-    private var line:some View {
-        VStack{
-            Divider().frame(height:10)
-        }
-    }
-}
-
-#Preview {
-    LoginView()
+  
 }
