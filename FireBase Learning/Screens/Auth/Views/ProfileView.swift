@@ -11,18 +11,52 @@ struct ProfileView: View {
     @EnvironmentObject   var authViewModel : AuthViewModel
 
     var body: some View {
-        VStack{
-            Spacer()
-            if let currentUser = authViewModel.currentUser  {
-                Text("Full Name: \(currentUser.fullName)")
+        List{
+            Section{
+                HStack(spacing: 16){
+                    Text("YP")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .frame(width: 70, height: 70)
+                        .background(Color(.lightGray))
+                        .clipShape(Circle())
+                    
+                    VStack(alignment: .leading , spacing: 4){
+                        Text("Yogesh Patel")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        
+                        Text("yogesh@gmail.com")
+                            .font(.footnote)
+                    }
+                }
             }
-            else{
-                ProgressView("please wait...")
+            Section("Account"){
+                Button{
+                    
+                } label: {
+                    Label{
+                        Text("Sign Out")
+                            .foregroundStyle(.black)
+                    } icon: {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .foregroundStyle(.red)
+                    }
+                }
+                Button{
+                    
+                } label: {
+                    Label{
+                        Text("Delete Account")
+                            .foregroundStyle(.black)
+                    } icon: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.red)
+                    }
+                }
+                
             }
-            Spacer()
-            Button("Sign Out"){
-                authViewModel.signOut()
-             }
         }
     }
 }
