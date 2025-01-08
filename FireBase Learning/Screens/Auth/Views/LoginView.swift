@@ -14,7 +14,7 @@ struct LoginView: View {
     @EnvironmentObject var router: Router
     // MARK: - Body
     var body: some View {
-        NavigationStack {
+        
             ScrollView{
                 VStack(spacing:16){
                     //logo
@@ -46,7 +46,7 @@ struct LoginView: View {
                 .padding(.vertical,8)
                 .alert("Something went wrong",isPresented: $authViewModel.isError){}
         }
-    }
+    
     // MARK: - Login and SignUp
    private var loginButton: some View {
         Button {
@@ -61,8 +61,8 @@ struct LoginView: View {
     
     
     private var signUp: some View {
-        NavigationLink{
-            CreateAccountView().environmentObject(authViewModel)
+        Button{
+            router.navigate(to: .createAccount)
         }label:{
             HStack{
                 Text("Don't have an account?")
@@ -114,8 +114,8 @@ extension LoginView {
         HStack{
             Spacer()
             
-            NavigationLink{
-                ForgotPasswordView().environmentObject(authViewModel)
+            Button{
+                router.navigate(to: .forgotPasword)
             } label: {
                 Text("Forgot Password?")
                     .foregroundStyle(.gray)

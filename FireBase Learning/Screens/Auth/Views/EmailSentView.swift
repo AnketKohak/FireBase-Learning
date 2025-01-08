@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EmailSentView: View {
-    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
 
     var body: some View {
@@ -31,14 +30,15 @@ struct EmailSentView: View {
                     .foregroundStyle(.secondary)
             }
             Button{
-                
+                router.navigateToRoot()
             }label:{
                 Text("Skip, I'll confirm later")
             }.buttonStyle(CapsuleButtonStyle())
             Spacer()
+            
+            
             Button{
-                dismiss()
-
+                router.navigateBack()
             } label:{
                 (Text("Did not recevie the email? check your spam filter, or ").foregroundStyle(.gray) +
                  Text("try another email address").foregroundStyle(.teal))

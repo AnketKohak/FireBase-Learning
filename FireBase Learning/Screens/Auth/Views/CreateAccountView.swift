@@ -13,7 +13,6 @@ struct CreateAccountView: View {
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @EnvironmentObject   var authViewModel : AuthViewModel
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var router: Router
 
     // MARK: - Body
@@ -61,7 +60,7 @@ struct CreateAccountView: View {
                 Task{
                     await authViewModel.createUser(email: email, fullName: fullName, password: password)
                     if !authViewModel.isError{
-                        presentationMode.wrappedValue.dismiss()
+                        router.navigateBack()
                     }
                 }
             } label: {

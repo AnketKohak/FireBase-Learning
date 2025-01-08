@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @State private var email: String = ""
-    @State private var isEmailSent = false
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var router: Router
 
@@ -26,7 +25,8 @@ struct ForgotPasswordView: View {
                 Task{
                     await authViewModel.resetPassword(by: email)
                     if !authViewModel.isError{
-                        isEmailSent = true
+                        router.navigate(to: .emailSent)
+                       
                     }
                 }
                
@@ -37,8 +37,7 @@ struct ForgotPasswordView: View {
         }
         .padding()
         .toolbarRole(.editor)
-        .navigationDestination(isPresented: $isEmailSent){ EmailSentView()
-        }.onAppear{
+        .onAppear{
             email = ""
         }
     }
