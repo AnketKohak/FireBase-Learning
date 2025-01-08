@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 @MainActor
 final class AuthViewModel: ObservableObject {
- 
+    // MARK: - Variables
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var isError: Bool = false
@@ -22,15 +22,11 @@ final class AuthViewModel: ObservableObject {
             await loadUser()
         }
     }
-    
-    func loadUser() async {
-        if let user = auth.currentUser{
-            userSession = user
-            await fetchUser(by: user.uid)
-        }
-    }
-    
-    
+}
+
+
+// MARK: - login create store
+extension AuthViewModel{
     func login(email: String, password: String)async{
         do{
             let authResult = try await auth.signIn(withEmail: email,password: password)
@@ -60,15 +56,11 @@ final class AuthViewModel: ObservableObject {
             isError = true
         }
     }
-    func fetchUser(by uid:String) async{
-        do{
-            let document = try await firestore.collection("users").document(uid).getDocument()
-            currentUser = try document.data(as: User.self)
-        }
-        catch{
-            isError = true
-        }
-    }
+}
+
+
+// MARK: - signOut delete account
+extension AuthViewModel{
     func signOut(){
         do{
             userSession = nil
@@ -92,5 +84,37 @@ final class AuthViewModel: ObservableObject {
     }
     private func deleteUser(by uid : String){
         firestore.collection("users").document(uid).delete()
+    }
+    
+    func resetPassword(by email:String) async{
+        do{
+            try await auth.sendPasswordReset(withEmail: email)
+        }
+        catch{
+            isError = true
+        }
+        
+    }
+}
+
+// MARK: - Load Fetch
+extension AuthViewModel{
+    func loadUser() async {
+        if let user = auth.currentUser{
+            userSession = user
+            await fetchUser(by: user.uid)
+        }
+    }
+    
+    
+    
+    func fetchUser(by uid:String) async{
+        do{
+            let document = try await firestore.collection("users").document(uid).getDocument()
+            currentUser = try document.data(as: User.self)
+        }
+        catch{
+            isError = true
+        }
     }
 }

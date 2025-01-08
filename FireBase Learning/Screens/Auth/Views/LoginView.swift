@@ -11,6 +11,7 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @EnvironmentObject   var authViewModel : AuthViewModel
+    @EnvironmentObject var router: Router
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -112,7 +113,9 @@ extension LoginView {
     private var forgotButton: some View {
         HStack{
             Spacer()
-            Button {
+            
+            NavigationLink{
+                ForgotPasswordView().environmentObject(authViewModel)
             } label: {
                 Text("Forgot Password?")
                     .foregroundStyle(.gray)

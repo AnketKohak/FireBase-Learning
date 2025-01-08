@@ -14,7 +14,8 @@ struct CreateAccountView: View {
     @State private var confirmPassword: String = ""
     @EnvironmentObject   var authViewModel : AuthViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @EnvironmentObject var router: Router
+
     // MARK: - Body
     var body: some View {
         VStack(spacing: 16){
