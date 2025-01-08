@@ -11,53 +11,62 @@ struct ProfileView: View {
     @EnvironmentObject   var authViewModel : AuthViewModel
 
     var body: some View {
-        List{
-            Section{
-                HStack(spacing: 16){
-                    Text("YP")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
-                        .frame(width: 70, height: 70)
-                        .background(Color(.lightGray))
-                        .clipShape(Circle())
-                    
-                    VStack(alignment: .leading , spacing: 4){
-                        Text("Yogesh Patel")
-                            .font(.subheadline)
+        if let user = authViewModel.currentUser{
+            
+            List{
+                Section{
+                    HStack(spacing: 16){
+                        Text(user.initials)
+                            .font(.title)
                             .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .frame(width: 70, height: 70)
+                            .background(Color(.lightGray))
+                            .clipShape(Circle())
                         
-                        Text("yogesh@gmail.com")
-                            .font(.footnote)
+                        VStack(alignment: .leading , spacing: 4){
+                            Text(user.fullName)
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                            
+                            Text(user.email)
+                                .font(.footnote)
+                        }
                     }
                 }
-            }
-            Section("Account"){
-                Button{
+                Section("Account"){
+                    Button{
+                        authViewModel.signOut()
+                    } label: {
+                        Label{
+                            Text("Sign Out")
+                                .foregroundStyle(.black)
+                        } icon: {
+                            Image(systemName: "arrow.left.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                    Button{
+                        Task{
+                          await authViewModel.deleteAccount()
+                        }
+                    } label: {
+                        Label{
+                            Text("Delete Account")
+                                .foregroundStyle(.black)
+                        } icon: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                    }
                     
-                } label: {
-                    Label{
-                        Text("Sign Out")
-                            .foregroundStyle(.black)
-                    } icon: {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .foregroundStyle(.red)
-                    }
                 }
-                Button{
-                    
-                } label: {
-                    Label{
-                        Text("Delete Account")
-                            .foregroundStyle(.black)
-                    } icon: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.red)
-                    }
-                }
-                
             }
         }
+        else{
+            ProgressView("Please Wait......")
+        }
+        
     }
 }
 
