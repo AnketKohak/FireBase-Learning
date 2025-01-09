@@ -1,5 +1,4 @@
 # Firebase Learning
-
 This repository contains projects and experiments created while learning Firebase integration with iOS applications. The primary focus is on understanding Firebase features such as authentication, database in iOS development.
 
 ## Features
