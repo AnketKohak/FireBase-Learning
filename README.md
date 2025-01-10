@@ -84,4 +84,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 For any inquiries, feel free to contact me:
 - **Email**: anketkohak40@gmail.com
-- **LinkedIn**: [Your LinkedIn Profile](#)
+- **LinkedIn**: (https://www.linkedin.com/in/anketkohak/)
