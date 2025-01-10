@@ -20,6 +20,9 @@ Ensure you have the following installed:
 - Xcode (Version 14 or above recommended)
 - A configured Firebase project with the necessary `GoogleService-Info.plist` file
 
+## Demo Video
+https://github.com/user-attachments/assets/0403c956-20a7-48ac-a73e-41ed87c2fd3d
+
 ## Getting Started
 1. Clone the repository:
    ```bash
