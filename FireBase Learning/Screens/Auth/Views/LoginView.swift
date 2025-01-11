@@ -102,7 +102,7 @@ extension LoginView {
     private var image: some View {
         Image("login_image")
             .resizable()
-            .scaledToFit()
+            .frame(width: 250, height: 250)
     }
     private var title: some View {
         Text("Let's Connect with US!")
